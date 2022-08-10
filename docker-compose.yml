@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  gateway:
+    build: Gateway/
+    ports:
+      - 8080:8080
+    links:
+      - cart-service
+      - product-service
+
+  cart-service:
+    build: Cartservice/
+    ports:
+      - 8081:8081
+    links:
+      - cart-db
+
+  product-service:
+    build: Product-service/
+    ports:
+      - 8082:8082
+    links:
+      - product-db
+
+  cart-db:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "cart"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+
+  product-db:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "product"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    ports:
+      - 5433:5432
