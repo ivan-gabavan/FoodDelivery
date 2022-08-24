@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Регистрация</title>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=e9638e73-893a-4df1-982a-e990fa6efe44&lang=ru_RU"
+            type="text/javascript"></script>
+    <link rel='stylesheet' href='/static/css/reg-form.css' type='text/css'/>
+    <script src="/static/js/validations.js"></script>
+    <script src="/static/js/standardizations.js"></script>
+    <script src="/static/js/classes/User.js"></script>
+    <script src="/static/js/classes/IndividualEntity.js"></script>
+    <script src="/static/js/classes/LegalEntity.js"></script>
+    <script src="/static/js/classes/Client.js"></script>
+    <script src="/static/js/classes/Passport.js"></script>
+    <script src="/static/js/classes/Courier.js"></script>
+    <script src="/static/js/classes/Seller.js"></script>
+    <script src="/static/js/reg-form.js"></script>
+</head>
+<body>
+<form id="reg-form">
+    <div id="user-data" class="user">
+        <h2>Регистрация</h2>
+        <div class="form-row">
+            <label for="email">Email:</label>
+            <input id="email">
+        </div>
+        <div class="form-row">
+            <label for="password">Пароль:</label>
+            <input id="password">
+        </div>
+        <div class="form-row">
+            <label for="phone">Телефон:</label>
+            <input id="phone">
+        </div>
+        <div id="role">
+            <h3>Вы:</h3>
+            <div>
+                <input name="role" type=radio id="client" value="client" checked>
+                <label for="client">Клиент</label>
+            </div>
+            <div>
+                <input name="role" type=radio id="courier" value="courier">
+                <label for="courier">Курьер</label>
+            </div>
+            <div>
+                <input name="role" type=radio id="seller" value="seller">
+                <label for="seller">Продавец</label>
+            </div>
+        </div>
+    </div>
+
+    <div id="individual-data" class="individual">
+        <div class="form-row">
+            <label for="name">Имя:</label>
+            <input id="name">
+        </div>
+        <div class="form-row">
+            <label for="surname">Фамилия:</label>
+            <input id="surname">
+        </div>
+    </div>
+
+    <div id="legal-data" class="legal" style="display: none">
+        <div class="form-row">
+            <label for="shop-name">Название заведения:</label>
+            <input id="shop-name" type="text" size=15>
+        </div>
+        <div class="form-row">
+            <label for="inn">ИНН:</label>
+            <input id="inn" type="text" size=15>
+        </div>
+    </div>
+
+    <div id="client-data" class="client"></div>
+
+    <div id="courier-data" class="courier" style="display: none">
+        <h3>Паспорт:</h3>
+        <div class="form-row">
+            <label for="series">Серия:</label>
+            <input id="series">
+        </div>
+        <div class="form-row">
+            <label for="number">Номер:</label>
+            <input id="number">
+        </div>
+        <div class="form-row">
+            <label for="date-of-issue">Дата выдачи:</label>
+            <input id="date-of-issue">
+        </div>
+        <div class="form-row">
+            <label for="place-of-issue">Место выдачи:</label>
+            <input id="place-of-issue">
+        </div>
+    </div>
+    <div class="individual">
+        <h3 class="individual">Укажите ваш город:</h3>
+    </div>
+
+    <div class="legal">
+        <h3 class="legal" style="display: none">Укажите адрес заведения:</h3>
+    </div>
+
+    <div class="individual">
+        <div class="form-row">
+            <label for="city">Город:</label>
+            <input id="city">
+        </div>
+    </div>
+
+    <div class="legal" style="display: none">
+        <div class="form-row">
+            <label for="address">Адрес:</label>
+            <input id="address">
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <input type="button" value="Регистрация" id="submit">
+</form>
+</body>
+</html>
