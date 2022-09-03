@@ -8,6 +8,10 @@ services:
     links:
       - cart-service
       - product-service
+      - client-service
+      - courier-service
+      - seller-service
+      - user-db
 
   cart-service:
     build: Cartservice/
@@ -16,12 +20,33 @@ services:
     links:
       - cart-db
 
+  client-service:
+    build: Client-service/
+    ports:
+      - 8084:8084
+    links:
+      - client-db
+
   product-service:
     build: Product-service/
     ports:
       - 8082:8082
     links:
       - product-db
+
+  courier-service:
+    build: Courier-service/
+    ports:
+      - 8085:8085
+    links:
+      - courier-db
+
+  seller-service:
+    build: Seller-service/
+    ports:
+      - 8086:8086
+    links:
+      - seller-db
 
   cart-db:
     image: postgres:13.3
@@ -44,3 +69,47 @@ services:
       - .:/docker-entrypoint-initdb.d
     ports:
       - 5433:5432
+
+  user-db:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "usr"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    ports:
+      - 5434:5432
+
+  client-db:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "client"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    ports:
+      - 5435:5432
+
+  courier-db:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "courier"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    ports:
+      - 5436:5432
+
+  seller-db:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "seller"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    ports:
+      - 5437:5432
