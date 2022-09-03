@@ -11,6 +11,13 @@ class User{
         this.email = email
         this.password = password
     }
+    toJSON() {
+        return {
+            phone: this.phone,
+            email: this.email,
+            password: this.password
+        }
+    }
     get phone(){
         return this.#phone;
     }
@@ -25,6 +32,7 @@ class User{
     set email(value){
         if (emailValidation(value)){
             this.#email = emailStandardization(value)
+            return
         }
         throw new Error("Wrong email")
     }

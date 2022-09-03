@@ -11,6 +11,13 @@ class LegalEntity extends User{
         this.address = address
         this.name = name
     }
+    toJSON() {
+        let jsonObj = super.toJSON()
+        jsonObj["inn"] = this.inn
+        jsonObj["address"] = this.address
+        jsonObj["name"] = this.name
+        return jsonObj
+    }
     get inn(){return this.#inn}
     set inn(value){
         if (innValidation(value)){

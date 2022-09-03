@@ -35,7 +35,7 @@ function passportNumberStandardisation(validNumber){
 }
 
 function dateStandardisation(validDate){
-    return date.replace(/[-/_.\s]/, "-")
+    return validDate.replace(/[-/_.\s]/g, "-")
 }
 
 function placeOfIssueStandardization(validPlace){

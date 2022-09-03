@@ -73,7 +73,7 @@ function dateValidation(date) {
 }
 
 function placeOfIssueValidation(place) {
-    const reg = /[^а-яА-ЯЁё"-'\s]/
+    const reg = /[^а-яА-ЯЁё\"-\'\s]/
     return !reg.test(place)
 }
 
