@@ -9,6 +9,14 @@ class Passport{
         this.dateOfIssue = dateOfIssue
         this.placeOfIssue = placeOfOIssue
     }
+    toJSON() {
+        return {
+            series: this.series,
+            number: this.number,
+            dateOfIssue: this.dateOfIssue,
+            placeOfIssue: this.placeOfIssue
+        }
+    }
     get series(){
         return this.#series
     }
@@ -31,7 +39,7 @@ class Passport{
     }
     get dateOfIssue(){return this.#dateOfIssue}
     set dateOfIssue(value){
-        if (dateValidation()){
+        if (dateValidation(value)){
             this.#dateOfIssue = dateStandardisation(value)
             return
         }

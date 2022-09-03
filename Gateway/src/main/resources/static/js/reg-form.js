@@ -33,6 +33,61 @@ function changeRole() {
     showAllHtmlClasses(htmlClassTree)
 }
 
+function sendRegForm() {
+    let objReq
+    const role = document.querySelector("input[name = role]:checked").value
+    switch (role){
+        case "client":{
+            objReq = new Client(
+                document.getElementById("phone").value,
+                document.getElementById("email").value,
+                document.getElementById("password").value,
+                document.getElementById("name").value,
+                document.getElementById("surname").value,
+                document.getElementById("city").value
+            )
+            break
+        }
+        case "courier":{
+            objReq = new Courier(
+                document.getElementById("phone").value,
+                document.getElementById("email").value,
+                document.getElementById("password").value,
+                document.getElementById("name").value,
+                document.getElementById("surname").value,
+                document.getElementById("city").value,
+                new Passport(
+                    document.getElementById("series").value,
+                    document.getElementById("number").value,
+                    document.getElementById("date-of-issue").value,
+                    document.getElementById("place-of-issue").value
+                )
+            )
+            break
+        }
+        case "seller":{
+            objReq = new Seller(
+                document.getElementById("phone").value,
+                document.getElementById("email").value,
+                document.getElementById("password").value,
+                document.getElementById("inn").value,
+                document.getElementById("shop-name").value,
+                document.getElementById("address").value
+            )
+            break
+        }
+    }
+    const http = new XMLHttpRequest()
+    http.open('POST', '/registration/' + role, false)
+    http.setRequestHeader('Content-type', 'application/json')
+    http.send(JSON.stringify(objReq))
+    //let parser = new DOMParser();
+    //let doc = parser.parseFromString(http.response.toString(), "text/html");
+    //window.document.body.innerHTML = doc.body.innerHTML
+    alert(http.response)
+    window.location.href = http.response
+}
+
 let inputsAcyncValidation = new Map([
     ["city", cityValidation],
     ["address", addressValidation]
@@ -52,6 +107,7 @@ let inputsValidation = new Map([
 ])
 window.onload = function () {
     document.getElementById("role").addEventListener("change", changeRole)
+    document.getElementById("submit").addEventListener("click", sendRegForm)
     document.querySelectorAll("input").forEach(input => {
             if (inputsValidation.get(input.id) != undefined) {
                 input.addEventListener("input", function () {
@@ -113,6 +169,7 @@ function getCity(coords) {
     getFirstGeoObject(coords, "locality").then(function (firstGeoObject) {
         let city = firstGeoObject.getLocalities().length ? firstGeoObject.getLocalities() : firstGeoObject.getAdministrativeAreas()
         document.getElementById("city").value = city
+        geoObjectsCash.set(city[0], firstGeoObject)
         document.getElementById("city").style.background = '#EEE8AA'
         document.getElementById("submit").disabled = false
         userPlacemark.properties.set({
@@ -126,6 +183,7 @@ function getAddress(coords) {
     getFirstGeoObject(coords,'house').then(function (firstGeoObject) {
         let address = firstGeoObject.getAddressLine()
         document.getElementById("address").value = address
+        geoObjectsCash.set(address, firstGeoObject)
         document.getElementById("address").style.background = '#EEE8AA'
 
         userPlacemark.properties.set({

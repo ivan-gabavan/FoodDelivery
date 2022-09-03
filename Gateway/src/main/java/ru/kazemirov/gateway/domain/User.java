@@ -1,49 +1,56 @@
 package ru.kazemirov.gateway.domain;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 import javax.persistence.*;
 import java.util.Set;
 
-@EntityScan
+@Entity
 @Table( name = "usr")
 public class User {
     @Id
-    private Long id;
-    private String username;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    private String email;
+    private String phone;
     private String password;
     private boolean active;
 
     @ElementCollection (targetClass = Role.class, fetch = FetchType.EAGER)
-    //@CollectionTable (name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable (name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> role;
 
     public User() {
     }
-
-    public User(Long id, String username, String password, boolean active, Set<Role> role) {
+    public User(Integer id, String email, String phone, String password, boolean active, Set<Role> role) {
         this.id = id;
-        this.username = username;
+        this.email = email;
+        this.phone = phone;
         this.password = password;
         this.active = active;
         this.role = role;
     }
-
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
@@ -69,4 +76,6 @@ public class User {
     public void setRole(Set<Role> role) {
         this.role = role;
     }
+
+
 }
